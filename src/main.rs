@@ -1,5 +1,3 @@
-use std::io;
-
 fn greeting() {
     println!(
         "\nWelcome to the Ultimate Tic-Tac-Toe Showdown!\n\
@@ -56,6 +54,10 @@ fn ask_player(squares: &mut [char; 9], player: char) {
     }
 }
 
+fn is_over(squares: &mut [char; 9]) -> bool {
+    squares.iter().all(|&square| square == 'X' || square == 'O')
+}
+
 fn main() {
     let mut squares = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
     let mut player = 'X';
@@ -65,6 +67,12 @@ fn main() {
     loop {
         draw_board(&mut squares);
         ask_player(&mut squares, player);
+
+        if is_over(&mut squares) {
+            draw_board(&mut squares);
+            println!("All of the fields are filled");
+            break;
+        }
 
         //Switch the player
         player = if player == 'X' { 'O' } else { 'X' }; 
