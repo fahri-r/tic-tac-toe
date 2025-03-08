@@ -8,7 +8,8 @@ fn greeting() {
 }
 
 fn draw_board(squares: &mut [char; 9]) {
-    print!("\n");
+    println!("\n");
+
     for i in 0..3 {
         let offset = i * 3;
 
@@ -20,35 +21,52 @@ fn draw_board(squares: &mut [char; 9]) {
         print!("{}", squares[offset + 2]);
         println!(" |");
     }
+
     print!("-------------\n");
+}
+
+fn ask_player(squares: &mut [char; 9], player: char) {
+    loop {
+        let mut input = String::new();
+        if std::io::stdin().read_line(&mut input).is_err() {
+            println!("Couldn't read the line! Try again.");
+        }
+
+        if let Ok(number) = input.trim().parse::<usize>() {
+            if number < 1 || number > 9 {
+                println!("The number must be between 1 and 9");
+                continue;
+            }
+
+            let index = number - 1;
+
+            if squares[index] == 'X' || squares[index] == 'O' {
+                println!("This field is already taken by {}", squares[index]);
+                continue;
+            }
+            
+            //Assign value to square
+            squares[index] = player;
+            break;
+
+        } else {
+            println!("Only number allowed");
+            continue;
+        };
+    }
 }
 
 fn main() {
     let mut squares = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    let mut player = 'X';
 
     greeting();
 
-    draw_board(&mut squares);
+    loop {
+        draw_board(&mut squares);
+        ask_player(&mut squares, player);
 
-
-    let mut input = String::new();
-    if std::io::stdin().read_line(&mut input).is_err() {
-        println!("Couldn't read line! Try again.");
+        //Switch the player
+        player = if player == 'X' { 'O' } else { 'X' }; 
     }
-
-    if let Ok(number) = input.trim().parse::<usize>() {
-        if number < 1 || number > 9 {
-            println!("have to be between 1 to 9 {}", input);
-            return;
-        }
-
-        let index = number - 1;
-        
-        squares[index] = 'X';
-
-    } else {
-        println!("only number allowed");
-    };
-
-    draw_board(&mut squares);
 }
