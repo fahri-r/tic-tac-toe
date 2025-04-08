@@ -6,7 +6,7 @@ fn greeting() {
 }
 
 fn draw_board(squares: &mut [char; 9]) {
-    println!("\n");
+    println!();
 
     for i in 0..3 {
         let offset = i * 3;
@@ -20,12 +20,15 @@ fn draw_board(squares: &mut [char; 9]) {
         println!(" |");
     }
 
-    print!("-------------\n");
+    println!("-------------");
 }
 
 fn ask_player(squares: &mut [char; 9], player: char) {
     loop {
         let mut input = String::new();
+
+        println!("Player '{}' please input the number:", player);
+
         if std::io::stdin().read_line(&mut input).is_err() {
             println!("Couldn't read the line! Try again.");
         }
@@ -93,7 +96,7 @@ fn main() {
 
         if is_win(&mut squares) {
             draw_board(&mut squares);
-            println!("{} Win!", player);
+            println!("Player '{}' Win!", player);
             break;
         }
 
