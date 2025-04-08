@@ -4,6 +4,7 @@ This repository contains a simple **Tic Tac Toe** game implemented in Rust, crea
 
 ## 🖼️ Gameplay
 ![Tic Tac Toe](./img/tic-tac-toe-1.png)
+
 ![Tic Tac Toe](./img/tic-tac-toe-2.png)
 
 ## 🚀 Getting Started  
